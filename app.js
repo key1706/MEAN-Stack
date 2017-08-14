@@ -7,16 +7,18 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 
 //connect to database
-mongoose.connect(config.database);
+mongoose.connect(config.database,{
+  useMongoClient: true
+});
 
 //on connection
-mongoose.connection.on('connect', () => {
-  console.log('connected to database' + config.database);
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('connected to database: ' + config.database);
 });
 
-mongoose.connection.on('error', (err) => {
-  console.log('Database error: ' + err);
-});
 
 
 const app = express();
@@ -44,5 +46,5 @@ app.get('/', (req, res) => {
 
 //start Server
 app.listen(port, () => {
-  console.log('server started on port' + port);
+  console.log('server started on port ' + port);
 });
