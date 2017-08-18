@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
-//use schema
+//TODO:use schema
 const UserSchema = mongoose.Schema({
   name: {
     type: String
